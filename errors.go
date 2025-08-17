@@ -3,18 +3,18 @@ package unidad
 import "fmt"
 
 type UnitNotRegisteredError struct {
-	UnitSymbol UnitSymbol
+	Symbol Symbol
 }
 
 func (e *UnitNotRegisteredError) Error() string {
-	return fmt.Sprintf("unit %s is not registered", e.UnitSymbol)
+	return fmt.Sprintf("unit %s is not registered", e.Symbol)
 }
 
-type TypeMismatchError struct {
-	SourceUnit UnitType
-	TargetUnit UnitType
+type QuantityMismatchError struct {
+	SourceUnit Quantity
+	TargetUnit Quantity
 }
 
-func (e *TypeMismatchError) Error() string {
+func (e *QuantityMismatchError) Error() string {
 	return fmt.Sprintf("type mismatch: cannot perform conversion between %s and %s", e.SourceUnit, e.TargetUnit)
 }

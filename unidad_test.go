@@ -11,7 +11,7 @@ func TestSuccessfulConvertion(t *testing.T) {
 	tests := []struct {
 		name       string
 		measurment Measurement
-		targetUnit UnitSymbol
+		targetUnit Symbol
 		want       decimal.Decimal
 	}{
 		{
@@ -50,7 +50,7 @@ func TestConvertUnitNotRegisteredError(t *testing.T) {
 	tests := []struct {
 		name       string
 		measurment Measurement
-		targetUnit UnitSymbol
+		targetUnit Symbol
 		want       decimal.Decimal
 	}{
 		{
@@ -77,11 +77,11 @@ func TestConvertUnitNotRegisteredError(t *testing.T) {
 	}
 }
 
-func TestConvertTypeMismatchError(t *testing.T) {
+func TestConvertQuantityMismatchError(t *testing.T) {
 	tests := []struct {
 		name       string
 		measurment Measurement
-		targetUnit UnitSymbol
+		targetUnit Symbol
 		want       decimal.Decimal
 	}{
 		{
@@ -96,13 +96,13 @@ func TestConvertTypeMismatchError(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			var typeMismatchError *TypeMismatchError
+			var typeMismatchError *QuantityMismatchError
 			_, err := tt.measurment.ConvertTo(tt.targetUnit)
 			if err == nil {
-				t.Fatalf("expected: %T, actual: nil", TypeMismatchError{})
+				t.Fatalf("expected: %T, actual: nil", QuantityMismatchError{})
 			}
 			if !errors.As(err, &typeMismatchError) {
-				t.Fatalf("expected error of type(%T) but got error of type(%T)", TypeMismatchError{}, err)
+				t.Fatalf("expected error of type(%T) but got error of type(%T)", QuantityMismatchError{}, err)
 			}
 		})
 	}
